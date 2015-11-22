@@ -42,55 +42,55 @@ SKIP=95
 [[ -n $NZBPO_PORT ]] || { echo "[ERROR] Port not set"; exit $ERROR; }
 
 kodi_is_local () {
-	if [[ $NZBPO_HOST == 'localhost'  || $NZBPO_HOST == '127.0.0.1' ]]; then
-		return 0
-	else
-		return 1
-	fi
+  if [[ $NZBPO_HOST == 'localhost'  || $NZBPO_HOST == '127.0.0.1' ]]; then
+    return 0
+  else
+    return 1
+  fi
 }
 
 kodi_is_running_locally () {
-	if pgrep kodi.bin 1>/dev/null 2>&1; then
-		return 0
-	elif ps ax | grep [k]odi.bin 1>/dev/null 2>&1; then
-		return 0
-	else
-		return 1
-	fi
+  if pgrep kodi.bin 1>/dev/null 2>&1; then
+    return 0
+  elif ps ax | grep [k]odi.bin 1>/dev/null 2>&1; then
+    return 0
+  else
+    return 1
+  fi
 }
 
 if [[ $NZBPO_FORCE_UPDATE == 'no' ]]; then
-	if kodi_is_local && ! kodi_is_running_locally; then
-		echo "[DETAIL] Kodi is not running so we can't update it; skipping update."
-		exit $SKIP
-	fi
+  if kodi_is_local && ! kodi_is_running_locally; then
+    echo "[DETAIL] Kodi is not running so we can't update it; skipping update."
+    exit $SKIP
+  fi
 fi
 
 if ! which curl 1>/dev/null 2>&1; then
-	echo '[ERROR] Can not find curl. update_kodi requires curl to be installed and in $PATH.'
-	exit $ERROR
+  echo '[ERROR] Can not find curl. update_kodi requires curl to be installed and in $PATH.'
+  exit $ERROR
 fi
 
 curl --connect-timeout 5 \
-	--data-binary \
-	'{ "jsonrpc": "2.0", "method": "VideoLibrary.Scan", "id": "mybash"}' \
-	-H 'content-type: application/json;' \
-	http://${NZBPO_HOST}:${NZBPO_PORT}/jsonrpc 1>/dev/null 2>&1
+  --data-binary \
+  '{ "jsonrpc": "2.0", "method": "VideoLibrary.Scan", "id": "mybash"}' \
+  -H 'content-type: application/json;' \
+  http://${NZBPO_HOST}:${NZBPO_PORT}/jsonrpc 1>/dev/null 2>&1
 
 curl_return_value="$?"
 
 case $curl_return_value in
-	0)
-		exit $SUCCESS ;;
-	6)
-		echo "[ERROR] Couldn't resolve host: ${NZBPO_HOST}"
-		exit $ERROR ;;
-	7)
-		echo "[Error] Could not connect to the Kodi API endpoint at ${NZBPO_HOST}:${NZBPO_PORT}."
-		echo "[Error] Is Kodi running and is 'Allow remote control via HTTP' enabled?"
-		exit $ERROR ;;
-	*)
-		echo "[Error] Unknown error occured. Curl returned: ${curl_return_value}"
-		exit $ERROR ;;
+  0)
+    exit $SUCCESS ;;
+  6)
+    echo "[ERROR] Couldn't resolve host: ${NZBPO_HOST}"
+    exit $ERROR ;;
+  7)
+    echo "[Error] Could not connect to the Kodi API endpoint at ${NZBPO_HOST}:${NZBPO_PORT}."
+    echo "[Error] Is Kodi running and is 'Allow remote control via HTTP' enabled?"
+    exit $ERROR ;;
+  *)
+    echo "[Error] Unknown error occured. Curl returned: ${curl_return_value}"
+    exit $ERROR ;;
 esac
 
