@@ -9,5 +9,5 @@ NZBGet script to update Kodi's video library
 
 ## Limitations
 
-Requires Curl to be installed.
-Only runs on linux/unix hosts with BASH.
+* Requires Curl to be installed.
+* Only runs on linux/unix hosts with BASH.
