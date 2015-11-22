@@ -7,23 +7,28 @@
 # This script sends a jsonrpc call to Kodi's API to update the video library.
 #
 # Info about update_kodi:
-# Web-site: https://github.com/natemccurdy/nzbget-update_kodi
-# PP-Script Version: 1.1.0
-
-# NOTE: This script only runs on *nix based hosts with BASH. It also requires
-# that curl is installed and is in the $PATH (it most likely is).
+# Web-site: http://github.com/natemccurdy/nzbget-update_kodi.
+# PP-Script Version: 1.1.1.
+#
+# NOTE: This script only runs on *nix based hosts with BASH.
+#       It also requires that curl is installed and is in the $PATH.
 
 ##############################################################################
 ### OPTIONS                                                                ###
 
-# The hostname or IP address of the host running Kodi. This can be a remote
-# host or a local host.
+# The hostname or IP address of the host running Kodi.
+#
+# This can be a remote host or a local host. e.g. 192.168.1.50 or localhost
 #host=127.0.0.1
 
-# The port that Kodi is listening to for API calls. This should be the port
-# number that you see on the 'Web Server' page in Kodi's settings.
+# The port that Kodi is listening to for API calls.
+#
+# This should be the port number that you see on the 'Web Server' page in
+# Kodi's settings.
 #port=8081
 
+# Whether to force an update or not (yes, no).
+#
 # If Kodi is on the same host as NZBGet, we can check to see that Kodi is
 # running before trying to hit its API. This way, we get a clean "Skip" in
 # NZBGET instead of an "Error". If you want to disable this check and
@@ -93,4 +98,3 @@ case $curl_return_value in
     echo "[Error] Unknown error occured. Curl returned: ${curl_return_value}"
     exit $ERROR ;;
 esac
-
