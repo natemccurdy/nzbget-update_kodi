@@ -31,7 +31,7 @@
 #
 # If Kodi is on the same host as NZBGet, we can check to see that Kodi is
 # running before trying to hit its API. This way, we get a clean "Skip" in
-# NZBGET instead of an "Error". If you want to disable this check and
+# NZBGET instead of an "ERROR". If you want to disable this check and
 # always try to hit the API, set this to 'yes'.
 #force_update=no
 
@@ -91,10 +91,10 @@ case $curl_return_value in
     echo "[ERROR] Couldn't resolve host: ${NZBPO_HOST}"
     exit $ERROR ;;
   7)
-    echo "[Error] Could not connect to the Kodi API endpoint at ${NZBPO_HOST}:${NZBPO_PORT}."
-    echo "[Error] Is Kodi running and is 'Allow remote control via HTTP' enabled?"
+    echo "[ERROR] Could not connect to the Kodi API endpoint at ${NZBPO_HOST}:${NZBPO_PORT}."
+    echo "[ERROR] Is Kodi running and is 'Allow remote control via HTTP' enabled?"
     exit $ERROR ;;
   *)
-    echo "[Error] Unknown error occured. Curl returned: ${curl_return_value}"
+    echo "[ERROR] Unknown error occured. Curl returned: ${curl_return_value}"
     exit $ERROR ;;
 esac
