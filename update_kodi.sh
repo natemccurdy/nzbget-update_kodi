@@ -8,7 +8,7 @@
 #
 # Info about update_kodi:
 # Web-site: http://github.com/natemccurdy/nzbget-update_kodi.
-# PP-Script Version: 1.1.1.
+# PP-Script Version: 1.1.2.
 #
 # NOTE: This script only runs on *nix based hosts with BASH.
 #       It also requires that curl is installed and is in the $PATH.
