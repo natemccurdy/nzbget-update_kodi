@@ -73,7 +73,8 @@ if [[ $NZBPO_FORCE_UPDATE == 'no' ]]; then
   fi
 fi
 
-if ! which curl 1>/dev/null 2>&1; then
+if ! command -v curl 1>/dev/null 2>&1; then
+  # shellcheck disable=SC2016
   echo '[ERROR] Can not find curl. update_kodi requires curl to be installed and in $PATH.'
   exit $ERROR
 fi
@@ -82,7 +83,7 @@ curl --connect-timeout 5 \
   --data-binary \
   '{ "jsonrpc": "2.0", "method": "VideoLibrary.Scan", "id": "mybash"}' \
   -H 'content-type: application/json;' \
-  http://${NZBPO_HOST}:${NZBPO_PORT}/jsonrpc 1>/dev/null 2>&1
+  "http://${NZBPO_HOST}:${NZBPO_PORT}/jsonrpc" 1>/dev/null 2>&1
 
 curl_return_value="$?"
 
