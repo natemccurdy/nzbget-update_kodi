@@ -59,9 +59,7 @@ kodi_is_local () {
 }
 
 kodi_is_running_locally () {
-  if pgrep kodi.bin 1>/dev/null 2>&1; then
-    return 0
-  elif ps ax | grep [k]odi.bin 1>/dev/null 2>&1; then
+  if pgrep -i kodi 1>/dev/null 2>&1; then
     return 0
   else
     return 1
