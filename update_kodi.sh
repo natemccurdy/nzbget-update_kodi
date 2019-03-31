@@ -51,11 +51,11 @@ SKIP=95
 [[ -n $NZBPO_PORT ]] || { echo "[ERROR] Port not set"; exit $ERROR; }
 
 kodi_is_local () {
-  if [[ $NZBPO_HOST == 'localhost'  || $NZBPO_HOST == '127.0.0.1' ]]; then
-    return 0
-  else
-    return 1
-  fi
+  hostname="$(hostname)"
+  case "$NZBPO_HOST" in
+    localhost|127.0.0.1|$hostname) return 0;;
+    *)                             return 1;;
+  esac
 }
 
 kodi_is_running_locally () {
