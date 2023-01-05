@@ -39,6 +39,15 @@
 # always try to hit the API, set this to 'yes'.
 #force_update=no
 
+# Require previous scripts to succeed before updating Kodi (yes, no).
+#
+# Setting this to 'yes' will check the exit status of all prior extension
+# scripts. If any of them failed, Kodi will not be updated. This is useful when
+# used in combination with VideoSort. For example, if VideoSort fails, there's
+# no need to update Kodi. When this is set to 'yes', make sure to order this
+# extension after VideoSort.
+#require_prior_scripts=no
+#
 ### NZBGET POST-PROCESSING SCRIPT                                          ###
 ##############################################################################
 
@@ -69,6 +78,13 @@ kodi_is_running_locally () {
 if [[ $NZBPP_TOTALSTATUS != SUCCESS ]]; then
   echo "[WARNING] The download of ${NZBPP_NZBNAME} has failed; skipping update."
   exit $SKIP
+fi
+
+if [[ $NZBPO_REQUIRE_PRIOR_SCRIPTS == yes ]]; then
+  if [[ $NZBPP_SCRIPTSTATUS != SUCCESS ]]; then
+    echo "[WARNING] Prior extension scripts did not succeed; skipping update."
+    exit $SKIP
+  fi
 fi
 
 if [[ $NZBPO_FORCE_UPDATE == no ]]; then
