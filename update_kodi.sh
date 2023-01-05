@@ -53,8 +53,8 @@ SKIP=95
 kodi_is_local () {
   hostname="$(hostname)"
   case "$NZBPO_HOST" in
-    localhost|127.0.0.1|$hostname) return 0;;
-    *)                             return 1;;
+    localhost|127.0.0.1|"$hostname") return 0;;
+    *)                               return 1;;
   esac
 }
 
@@ -66,7 +66,12 @@ kodi_is_running_locally () {
   fi
 }
 
-if [[ $NZBPO_FORCE_UPDATE == 'no' ]]; then
+if [[ $NZBPP_TOTALSTATUS != SUCCESS ]]; then
+  echo "[WARNING] The download of ${NZBPP_NZBNAME} has failed; skipping update."
+  exit $SKIP
+fi
+
+if [[ $NZBPO_FORCE_UPDATE == no ]]; then
   if kodi_is_local && ! kodi_is_running_locally; then
     echo "[DETAIL] Kodi is not running so we can't update it; skipping update."
     exit $SKIP
