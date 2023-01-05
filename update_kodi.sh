@@ -89,7 +89,7 @@ fi
 
 if [[ $NZBPO_FORCE_UPDATE == no ]]; then
   if kodi_is_local && ! kodi_is_running_locally; then
-    echo "[DETAIL] Kodi is not running so we can't update it; skipping update."
+    echo "[WARNING] Kodi is not running so we can't update it; skipping update."
     exit $SKIP
   fi
 fi
